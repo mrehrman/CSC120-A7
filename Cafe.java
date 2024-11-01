@@ -72,6 +72,21 @@ public class Cafe extends Building{
 
     } 
 
+    /**
+    * Prints the methods that the Library class has in an easy to read format.
+    */
+    public void showOptions() {
+    super.showOptions();
+    System.out.println(" + sellCoffee(int size, int nSugarPackets, int nCreams) \n + restock(int nCoffeeOunces, int nSugarPackets, int nCreams, int nCups)");
+    }
+
+    /**
+    * Overrides the goToFloor method to keep visitors on the 1st floor.
+    * @param floorNum The floor to navigate to.
+    */
+    public void goToFloor(int floorNum) {
+      throw new RuntimeException("Only the 1st floor is open to the public.");
+    }
 
    /**
    * Demonstrates the methods in the Cafe class using an instance of the class with the name "Compass".
@@ -79,9 +94,14 @@ public class Cafe extends Building{
    */
     public static void main(String[] args) {
         Cafe compass = new Cafe("Compass", "7 Neilson Drive", 1, 150, 150, 150, 50);
-        compass.sellCoffee(24, 12, 15);
-        compass.sellCoffee(200, 200, 200);
-        compass.sellCoffee(125, 20, 2);
+        // compass.sellCoffee(24, 12, 15);
+        // compass.sellCoffee(200, 200, 200);
+        // compass.sellCoffee(125, 20, 2);
+        compass.showOptions();
+        compass.enter();
+        compass.goUp();
+        compass.goToFloor(1);
     }
+
     
 }

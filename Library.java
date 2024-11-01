@@ -4,6 +4,7 @@ import java.util.Hashtable;
 public class Library extends Building{
 
   private Hashtable<String, Boolean> collection;
+  private boolean hasElevator;
 
   /**
    * Creates an instance of the class Library.
@@ -11,9 +12,10 @@ public class Library extends Building{
    * @param address The address of the Library.
    * @param nFloors The number of floors the Library has.
    */
-  public Library(String name, String address, int nFloors) {
+  public Library(String name, String address, int nFloors, boolean elevator) {
     super(name, address, nFloors);
     this.collection = new Hashtable<String, Boolean>();
+    this.hasElevator = elevator;
     System.out.println("You have built a library: 📖");
   }
   
@@ -127,39 +129,68 @@ public class Library extends Building{
     }
   }
 
+   /**
+   * Allows a person to move between non-adjacent floors if the Library has an elevator.
+   * @param floorNum The floor to navigate to.
+   */
+  public void goToFloor(int floorNum) {
+    if (this.activeFloor == -1) {
+        throw new RuntimeException("You are not inside this Building. Must call enter() before navigating between floors.");
+    }
+    if (floorNum < 1 || floorNum > this.nFloors) {
+        throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
+    }
+    if (this.hasElevator == true){
+    System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+    this.activeFloor = floorNum;
+    } else {
+      throw new RuntimeException(this.name + " does not have an elevator. Try goUp() or goDown() to go to an adjacent floor.");
+    }
+  }
 
+  /**
+   * Prints the methods that the Library class has in an easy to read format.
+   */
+  public void showOptions() {
+    super.showOptions();
+    System.out.println(" + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnBook(String title) \n + containsTitle(String title) \n + isAvailable(String title) \n + printCollection()");
+
+  }
 
   /**
    * Demonstrates the methods in the Library class using an instance of the class with the name "Neilson".
    * @param args
    */
   public static void main(String[] args) {
-    Library Neilson = new Library("Neilson", "7 Neilson Drive", 4);
-    System.out.println(Neilson.collection);
-    Neilson.addTitle("When Brooklyn Was Queer");
-    System.out.println(Neilson.collection);
-    Neilson.addTitle("When Brooklyn Was Queer");
-    System.out.println(Neilson.removeTitle("When Brooklyn Was Queer"));
-    //Neilson.removeTitle("When Brooklyn Was Queer"); 
-    Neilson.addTitle("Patience and Sarah");
-    Neilson.addTitle("Annie on My Mind");
-    //Neilson.addTitle("The Gilda Stories");
-    Neilson.checkOut("Patience and Sarah");
-    Neilson.checkOut("Patience and Sarah");
-    Neilson.checkOut("This Is How You Lose the Time War");
-    System.out.println(Neilson.collection);
-    Neilson.returnBook("Patience and Sarah");
-    Neilson.returnBook("Patience and Sarah");
-    Neilson.returnBook("This Is How You Lose the Time War");
-    Neilson.containsTitle("Annie on My Mind");
-    System.out.println(Neilson.containsTitle("Annie on My Mind"));
-    Neilson.containsTitle("This Is How You Lose the Time War");
-    //Neilson.checkOut("Annie on My Mind");
-    System.out.println(Neilson.isAvailable("Annie on My Mind"));
-    System.out.println(Neilson.collection);
-    //Neilson.printCollection();
-    Neilson.isAvailable("Annie on My Mind");
-    Neilson.isAvailable("We Are Okay");
+    Library Neilson = new Library("Neilson", "7 Neilson Drive", 4, true);
+    // System.out.println(Neilson.collection);
+    // Neilson.addTitle("When Brooklyn Was Queer");
+    // System.out.println(Neilson.collection);
+    // Neilson.addTitle("When Brooklyn Was Queer");
+    // System.out.println(Neilson.removeTitle("When Brooklyn Was Queer"));
+    // //Neilson.removeTitle("When Brooklyn Was Queer"); 
+    // Neilson.addTitle("Patience and Sarah");
+    // Neilson.addTitle("Annie on My Mind");
+    // //Neilson.addTitle("The Gilda Stories");
+    // Neilson.checkOut("Patience and Sarah");
+    // Neilson.checkOut("Patience and Sarah");
+    // Neilson.checkOut("This Is How You Lose the Time War");
+    // System.out.println(Neilson.collection);
+    // Neilson.returnBook("Patience and Sarah");
+    // Neilson.returnBook("Patience and Sarah");
+    // Neilson.returnBook("This Is How You Lose the Time War");
+    // Neilson.containsTitle("Annie on My Mind");
+    // System.out.println(Neilson.containsTitle("Annie on My Mind"));
+    // Neilson.containsTitle("This Is How You Lose the Time War");
+    // //Neilson.checkOut("Annie on My Mind");
+    // System.out.println(Neilson.isAvailable("Annie on My Mind"));
+    // System.out.println(Neilson.collection);
+    // //Neilson.printCollection();
+    // Neilson.isAvailable("Annie on My Mind");
+    // Neilson.isAvailable("We Are Okay");
+    Neilson.showOptions();
+    Neilson.enter();
+    Neilson.goToFloor(3);
 
   }
   

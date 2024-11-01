@@ -7,6 +7,7 @@ public class House extends Building {
   //initialize attributes
   private ArrayList<String> residents;
   private boolean hasDiningRoom;
+  private boolean hasElevator;
 
   /**
    * Creates instance of class House.
@@ -15,10 +16,11 @@ public class House extends Building {
    * @param nFloors The number of floors the House has.
    * @param dining True if the house has a dining room, false if the house does not have a dining room.
    */
-  public House(String name, String address, int nFloors, boolean dining) {
+  public House(String name, String address, int nFloors, boolean dining, boolean elevator) {
     super(name, address, nFloors);
     this.residents = new ArrayList<String>();
     this.hasDiningRoom = dining;
+    this.hasElevator = elevator;
     System.out.println("You have built a house: 🏠");
   }
 
@@ -90,24 +92,56 @@ public class House extends Building {
   }
 
   /**
+   * Allows a person to move between non-adjacent floors if the House has an elevator.
+   * @param floorNum The floor to navigate to.
+   */
+  public void goToFloor(int floorNum) {
+    if (this.activeFloor == -1) {
+        throw new RuntimeException("You are not inside this Building. Must call enter() before navigating between floors.");
+    }
+    if (floorNum < 1 || floorNum > this.nFloors) {
+        throw new RuntimeException("Invalid floor number. Valid range for this Building is 1-" + this.nFloors +".");
+    }
+    if (this.hasElevator == true){
+    System.out.println("You are now on floor #" + floorNum + " of " + this.name);
+    this.activeFloor = floorNum;
+    } else {
+      throw new RuntimeException(this.name + " does not have an elevator. Try goUp() or goDown() to go to an adjacent floor.");
+    }
+  }
+
+  /**
+   * Prints the methods that the House class has in an easy to read format.
+   */
+  public void showOptions() {
+    super.showOptions();
+    System.out.println(" + hasDiningRoom() \n + nResidents() \n + moveIn(String name) \n + moveOut(String name) \n + isResident(String person)");
+
+  }
+
+  /**
    * Demonstrates the methods in the House class using an instance of the class with the name "Tyler".
    * @param args
    */
   public static void main(String[] args) {
-    House tyler = new House("Tyler", "6 Green Street", 4, true);
-    System.out.println(tyler.name);
-    System.out.println(tyler.hasDiningRoom());
-    tyler.nResidents();
-    tyler.moveIn("Maddie");
-    tyler.nResidents();
-    tyler.moveIn("LC");
-    tyler.moveIn("LC");
-    tyler.nResidents();
-    tyler.moveOut("Maddie");
-    tyler.nResidents();
-    tyler.isResident("LC");
-    tyler.isResident("Maddie");
-    tyler.moveOut("Maddie");
+    House tyler = new House("Tyler", "6 Green Street", 4, true, false);
+    // System.out.println(tyler.name);
+    // System.out.println(tyler.hasDiningRoom());
+    // tyler.nResidents();
+    // tyler.moveIn("Maddie");
+    // tyler.nResidents();
+    // tyler.moveIn("LC");
+    // tyler.moveIn("LC");
+    // tyler.nResidents();
+    // tyler.moveOut("Maddie");
+    // tyler.nResidents();
+    // tyler.isResident("LC");
+    // tyler.isResident("Maddie");
+    // tyler.moveOut("Maddie");
+    tyler.showOptions();
+    tyler.enter();
+    tyler.goUp();
+    System.out.println(tyler.activeFloor);
 
   }
 
