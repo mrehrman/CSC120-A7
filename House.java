@@ -10,7 +10,33 @@ public class House extends Building {
   private boolean hasElevator;
 
   /**
-   * Creates instance of class House.
+   * Default constructor, only requires a House address. Sets hasDiningRoom and hasElevator to default values false.
+   * @param name The name of the House.
+   */
+  public House(String address){
+    super(); //call default Building contstructor
+    this.address = address; //override address
+    this.hasDiningRoom = false;
+    this.hasElevator = false;
+    System.out.println("You have built a house: 🏠");
+
+  }
+
+  /**
+   * Overloaded constructor with address, hasDiningRoom, and hasElevator.
+   * @param name The name of the House.
+   * @param dining True if the House has a dining room, false if the House does not.
+   * @param elevator True if the House has an elevator, false if the House does not.
+   */
+  public House(String address, boolean dining, boolean elevator){
+    this(address); //call default constructor
+    this.hasDiningRoom = dining;
+    this.hasElevator = elevator;
+    System.out.println("You have built a house: 🏠");
+  }
+
+  /**
+   * Full constructor, creates instance of class House.
    * @param name The name of the House.
    * @param address The address of the House.
    * @param nFloors The number of floors the House has.
@@ -47,7 +73,6 @@ public class House extends Building {
       return this.residents.size();
   }
 
-  //other methods
   /**
    * Lets a resident move into a House by adding their name to the ArrayList that stores residents.
    * @param name The name of the resident to move into the House.
@@ -138,10 +163,12 @@ public class House extends Building {
     // tyler.isResident("LC");
     // tyler.isResident("Maddie");
     // tyler.moveOut("Maddie");
-    tyler.showOptions();
-    tyler.enter();
-    tyler.goUp();
-    System.out.println(tyler.activeFloor);
+    // tyler.showOptions();
+    // tyler.enter();
+    // tyler.goUp();
+    // System.out.println(tyler.activeFloor);
+    House morris = new House("3 Green Street");
+    System.out.println(morris.address);
 
   }
 

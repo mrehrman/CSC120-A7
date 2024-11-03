@@ -7,7 +7,23 @@ public class Library extends Building{
   private boolean hasElevator;
 
   /**
-   * Creates an instance of the class Library.
+   * Default constructor, takes only address and number of floors.
+   * @param address The address of the Library.
+   */
+  public Library(String address, int nFloors){
+    super(address);
+    this.nFloors = nFloors;
+    if (this.nFloors > 1){
+      this.hasElevator = true;
+    } else{
+      this.hasElevator = false;
+    }
+    this.collection = new Hashtable<String, Boolean>();
+    System.out.println("You have built a library: 📖");
+  }
+
+  /**
+   * Full constructor. Creates an instance of the class Library.
    * @param name The name of the Library.
    * @param address The address of the Library.
    * @param nFloors The number of floors the Library has.
@@ -115,6 +131,31 @@ public class Library extends Building{
   }
 
   /**
+   * Overloaded method to check availability of two titles at once.
+   * @param title1 The first title to check checkout status for.
+   * @param title2 The second title to check checkout status for.
+   */
+  public void isAvailable(String title1, String title2){
+    if (this.containsTitle(title1)){
+      if (this.collection.get(title1) == true){
+        System.out.println(title1 + " is available.");
+      } else{
+        System.out.println(title1 + " is not available.");
+      }
+    } else{
+      throw new RuntimeException(title1 + " is not in the collection.");
+    } if (this.containsTitle(title2)){
+      if (this.collection.get(title2) == true){
+        System.out.println(title2 + " is available.");
+      } else{
+        System.out.println(title2 + " is not available.");
+      }
+    } else{
+      throw new RuntimeException(title2 + " is not in the collection.");
+    }
+  }
+
+  /**
    * Prints out the entire collection, including title and checkout status.
    * //this method is not yet implented correctly--it's creating an infinite loop. 
    */
@@ -163,34 +204,37 @@ public class Library extends Building{
    */
   public static void main(String[] args) {
     Library Neilson = new Library("Neilson", "7 Neilson Drive", 4, true);
-    // System.out.println(Neilson.collection);
-    // Neilson.addTitle("When Brooklyn Was Queer");
-    // System.out.println(Neilson.collection);
-    // Neilson.addTitle("When Brooklyn Was Queer");
-    // System.out.println(Neilson.removeTitle("When Brooklyn Was Queer"));
-    // //Neilson.removeTitle("When Brooklyn Was Queer"); 
-    // Neilson.addTitle("Patience and Sarah");
-    // Neilson.addTitle("Annie on My Mind");
-    // //Neilson.addTitle("The Gilda Stories");
-    // Neilson.checkOut("Patience and Sarah");
-    // Neilson.checkOut("Patience and Sarah");
-    // Neilson.checkOut("This Is How You Lose the Time War");
-    // System.out.println(Neilson.collection);
-    // Neilson.returnBook("Patience and Sarah");
-    // Neilson.returnBook("Patience and Sarah");
-    // Neilson.returnBook("This Is How You Lose the Time War");
-    // Neilson.containsTitle("Annie on My Mind");
-    // System.out.println(Neilson.containsTitle("Annie on My Mind"));
-    // Neilson.containsTitle("This Is How You Lose the Time War");
-    // //Neilson.checkOut("Annie on My Mind");
-    // System.out.println(Neilson.isAvailable("Annie on My Mind"));
-    // System.out.println(Neilson.collection);
-    // //Neilson.printCollection();
-    // Neilson.isAvailable("Annie on My Mind");
-    // Neilson.isAvailable("We Are Okay");
+    System.out.println(Neilson.collection);
+    Neilson.addTitle("When Brooklyn Was Queer");
+    System.out.println(Neilson.collection);
+    Neilson.addTitle("When Brooklyn Was Queer");
+    System.out.println(Neilson.removeTitle("When Brooklyn Was Queer"));
+    //Neilson.removeTitle("When Brooklyn Was Queer"); 
+    Neilson.addTitle("Patience and Sarah");
+    Neilson.addTitle("Annie on My Mind");
+    //Neilson.addTitle("The Gilda Stories");
+    Neilson.checkOut("Patience and Sarah");
+    Neilson.checkOut("Patience and Sarah");
+    Neilson.checkOut("This Is How You Lose the Time War");
+    System.out.println(Neilson.collection);
+    Neilson.returnBook("Patience and Sarah");
+    Neilson.returnBook("Patience and Sarah");
+    Neilson.returnBook("This Is How You Lose the Time War");
+    Neilson.containsTitle("Annie on My Mind");
+    System.out.println(Neilson.containsTitle("Annie on My Mind"));
+    Neilson.containsTitle("This Is How You Lose the Time War");
+    //Neilson.checkOut("Annie on My Mind");
+    System.out.println(Neilson.isAvailable("Annie on My Mind"));
+    System.out.println(Neilson.collection);
+    //Neilson.printCollection();
+    Neilson.isAvailable("Annie on My Mind");
+    //Neilson.isAvailable("We Are Okay");
     Neilson.showOptions();
     Neilson.enter();
     Neilson.goToFloor(3);
+    Library josten = new Library("25 Green Street", 1);
+    System.out.println(josten.hasElevator);
+    Neilson.isAvailable("Annie on My Mind", "Patience and Sarah");
 
   }
   
